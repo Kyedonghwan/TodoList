@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link, useMatch } from "react-router-dom";
 import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Chart from "./Chart";
@@ -44,6 +45,28 @@ const OverviewItem = styled.div`
     font-weight: 400;
     text-transform: uppercase;
     margin-bottom: 5px;
+  }
+`;
+
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`;
+
+const Tab = styled.span<{ isActive: boolean }>`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 7px 0px;
+  border-radius: 10px;
+  color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  a {
+    display: block;
   }
 `;
 
@@ -126,6 +149,9 @@ function Coin() {
     const [info, setInfo] = useState<IInfoData>();
     const [priceInfo, setPriceInfo] = useState<IPriceData>();
 
+    const chartMatch = useMatch("/:coinId/chart");
+    const priceMatch = useMatch("/:coinId/price");
+
     useEffect( () => {
         (async() => {
             const response = await (await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)).json();
@@ -171,6 +197,20 @@ function Coin() {
                       <span>{priceInfo?.max_supply}</span>
                     </OverviewItem>
                   </Overview>
+
+                  <Link to={`/${coinId}/chart`}>Chart
+                  </Link>
+
+                  <Link to={`/${coinId}/price`}>Price
+                  </Link>
+                  <Tabs>
+                    <Tab isActive={ chartMatch !==null}>
+                      <Link to={`/${coinId}/chart`}>Chart</Link>
+                    </Tab>
+                    <Tab isActive={priceMatch !== null}>
+                      <Link to={`/${coinId}/price`}>Price</Link>
+                    </Tab>
+                  </Tabs>
                   <Routes>
                     <Route path={"price"} element={<Price/>}>
                     </Route>
