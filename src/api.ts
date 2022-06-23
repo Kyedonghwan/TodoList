@@ -9,7 +9,7 @@ export function fetchCoinInfo(coinId: string | undefined) {
     return fetch(`${BASE_URL}/coins/${coinId}`).then((response) => response.json());
 }
 
-export function fecthCoinTickers(coinId: string | undefined) {
+export function fetchCoinTickers(coinId: string | undefined) {
     return fetch(`${BASE_URL}/tickers/${coinId}`).then((response) => response.json());
 }
 

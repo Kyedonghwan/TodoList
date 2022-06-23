@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import { Link, useMatch } from "react-router-dom";
 import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { fetchCoinInfo } from "../api";
+import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import Chart from "./Chart";
 import Price from "./Price";
 
@@ -150,12 +150,17 @@ function Coin() {
     const priceMatch = useMatch("/:coinId/price");
 
     const { isLoading: infoLoading, data:infoData } = useQuery<IInfoData>(["info", coinId], ()=> fetchCoinInfo(coinId));
-    const { isLoading: tickersLoading, data:tickersData } = useQuery<ITickersData>(["tickers", coinId], ()=> fetchCoinInfo(coinId));
+    const { isLoading: tickersLoading, data:tickersData } = useQuery<ITickersData>(["tickers", coinId], ()=> fetchCoinTickers(coinId), {
+      refetchInterval: 5000
+    });
 
     const loading = infoLoading || tickersLoading;
 
     return (
         <Container>
+          <Helmet>
+            <title>{state?.name ? state.name : loading ? "Loading..." : infoData?.name}</title>
+          </Helmet>
             <Header>
                 <Title>{state?.name ? state.name : loading ? "Loading..." : infoData?.name}</Title>
             </Header>
@@ -173,8 +178,8 @@ function Coin() {
                       <span>${infoData?.symbol}</span>
                     </OverviewItem>
                     <OverviewItem>
-                      <span>Open Source:</span>
-                      <span>{infoData?.open_source ? "Yes" : "No"}</span>
+                      <span>Price:</span>
+                      <span>${tickersData?.quotes.USD.price.toFixed(3)}</span>
                     </OverviewItem>
                   </Overview>
                   <Description>{infoData?.description}</Description>
@@ -188,12 +193,6 @@ function Coin() {
                       <span>{tickersData?.max_supply}</span>
                     </OverviewItem>
                   </Overview>
-
-                  <Link to={`/${coinId}/chart`}>Chart
-                  </Link>
-
-                  <Link to={`/${coinId}/price`}>Price
-                  </Link>
                   <Tabs>
                     <Tab isActive={ chartMatch !==null}>
                       <Link to={`/${coinId}/chart`}>Chart</Link>
