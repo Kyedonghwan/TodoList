@@ -80,7 +80,8 @@ function Coins() {
 
     return (
         <Container>
-            <Helmet>코인
+            <Helmet>
+                <title>코인</title>
             </Helmet>
             <Header>
                 <Title>코인</Title>
