@@ -106,7 +106,7 @@ interface IInfoData {
     last_data_at : string;
 }
 
-interface ITickersData {
+export interface ITickersData {
     id : string;
     name : string;
     symbol : string;
@@ -140,7 +140,11 @@ interface ITickersData {
     };
 }
 
-function Coin() {
+interface ICoinProps {
+  isDark: boolean;
+}
+
+function Coin({isDark}:ICoinProps) {
 
     const {coinId} = useParams();
 
@@ -204,7 +208,7 @@ function Coin() {
                   <Routes>
                     <Route path={"price"} element={<Price coinId={coinId} priceData={tickersData}/>}>
                     </Route>
-                    <Route path={"chart"} element={<Chart coinId={coinId}/>}>
+                    <Route path={"chart"} element={<Chart isDark={isDark} coinId={coinId}/>}>
                     </Route>
                   </Routes>
                 </>
