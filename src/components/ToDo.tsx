@@ -1,12 +1,24 @@
-import { IToDo } from "../atoms";
 
-export default function Todo( {text, category}: IToDo) {
+import { useSetRecoilState } from "recoil";
+import { Categories, IToDo, toDoState } from "../atoms";
+
+export default function Todo( {text, category, id}: IToDo) {
+    const setToDos = useSetRecoilState(toDoState);
+
+    const onClick = (newCategory : IToDo["category"]) => {
+        setToDos( (oldTodos) => {
+            const targetIndex = oldTodos.findIndex(todo => todo.id === id);
+            const newTodo = {text, id, category: newCategory};
+            return [...oldTodos.slice(0, targetIndex), newTodo, ...oldTodos.slice(targetIndex+1)];
+        })
+    }
+
     return (
         <li>
             <span>{text}</span>
-            <button>To Do</button>
-            <button>Doing</button>
-            <button>Done</button>
+            {category !== Categories.TODO && <button onClick={() => onClick(Categories.TODO)}>To Do</button>} 
+            {category !== Categories.DOING && <button onClick={() => onClick( Categories.DOING)}>Doing</button>}
+            {category !== Categories.DONE && <button onClick={() => onClick( Categories.DONE)}>Done</button>}
         </li>
     )
 }
