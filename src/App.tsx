@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import Practice from "./components/Practice";
 import ToDoList from "./components/ToDoList";
+import Trello from "./components/Trello";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -79,6 +80,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/" element={<ToDoList />}></Route>
+        </Routes>
+        <Routes>
+          <Route path="/trello" element={<Trello/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
