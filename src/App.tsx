@@ -1,4 +1,6 @@
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import Practice from "./components/Practice";
 import ToDoList from "./components/ToDoList";
 
 const GlobalStyle = createGlobalStyle`
@@ -71,7 +73,14 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <ToDoList />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/practice" element={<Practice/>}></Route>
+        </Routes>
+        <Routes>
+          <Route path="/" element={<ToDoList />}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

@@ -30,3 +30,22 @@ export const toDoSelector = selector({
         return toDos.filter(todo => todo.category === category);
     }
 })
+
+//단위 변환
+
+export const minuteState = atom({
+    key: "minutes",
+    default: 0,
+})
+
+export const hoursSelector = selector<number>({
+    key: "hoursSelector",
+    get: ({get}) => {
+        const minutes = get(minuteState);
+        return minutes/60;
+    },
+    set: ({set}, newValue) => {
+        const minutes = Number(newValue) * 60;
+        set(minuteState, minutes);
+    }
+})
