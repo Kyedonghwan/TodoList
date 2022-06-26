@@ -12,8 +12,10 @@ function CreateToDo() {
 
     const setToDos = useSetRecoilState(toDoState);
     const category = useRecoilValue(categoryState);
+
     const onValid = (data: IForm) => {
-        setToDos(oldToDos => [{text: data.toDo, category , id: Date.now()}, ...oldToDos]);
+        setToDos(oldToDos => [{text: data.toDo, category , id: Date.now()}, ...oldToDos]
+        );
         setValue("toDo","");
     }
 

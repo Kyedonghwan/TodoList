@@ -7,9 +7,9 @@ export interface IToDo {
 }
 
 export enum Categories {
-    "TODO",
-    "DOING",
-    "DONE"
+    "TODO"="TODO",
+    "DOING"="DOING",
+    "DONE"="DONE"
 }
 
 export const categoryState = atom<Categories>({
@@ -19,7 +19,7 @@ export const categoryState = atom<Categories>({
 
 export const toDoState = atom<IToDo[]>({
     key: "toDo",
-    default: [],
+    default: JSON.parse(localStorage.getItem("todos") || '[]')
 })
 
 export const toDoSelector = selector({

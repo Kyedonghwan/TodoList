@@ -13,12 +13,20 @@ export default function Todo( {text, category, id}: IToDo) {
         })
     }
 
+    const onClickDelete = () => {
+        setToDos( (oldTodos) => {
+            const targetIndex = oldTodos.findIndex(todo => todo.id ===id );
+            return [...oldTodos.slice(0,targetIndex),...oldTodos.slice(targetIndex+1)];
+        })
+    }
+
     return (
         <li>
             <span>{text}</span>
             {category !== Categories.TODO && <button onClick={() => onClick(Categories.TODO)}>To Do</button>} 
             {category !== Categories.DOING && <button onClick={() => onClick( Categories.DOING)}>Doing</button>}
             {category !== Categories.DONE && <button onClick={() => onClick( Categories.DONE)}>Done</button>}
+            <button onClick={onClickDelete}>delete</button>
         </li>
     )
 }
