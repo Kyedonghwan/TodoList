@@ -49,3 +49,10 @@ export const hoursSelector = selector<number>({
         set(minuteState, minutes);
     }
 })
+
+// Trello 
+
+export const trelloTodoState = atom({
+    key: "toDo",
+    default: ["a", "b", "c", "d", "e", "f"]
+})
