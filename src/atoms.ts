@@ -53,14 +53,19 @@ export const hoursSelector = selector<number>({
 // Trello 
 
 interface IToDoState {
-    [key : string]: string[];
+    [key : string]: ITrelloTodo[];
+}
+
+export interface ITrelloTodo {
+    id:number;
+    text:string;
 }
 
 export const trelloTodoState = atom<IToDoState>({
     key: "toDo",
     default: {
-        to_do: ["a", "b", "f"],
-        doing: ["c", "d"],
-        done: ["e"]
+        to_do: [],
+        doing: [],
+        done: []
     }
 })

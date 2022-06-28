@@ -33,8 +33,10 @@ const Trello = () => {
         if(destination?.droppableId === source.droppableId ) {
             setTodosObj(oldTodosObj => {
                 const boardCopy = [...oldTodosObj[source.droppableId]];
+                const taskObj = boardCopy[source.index];
+
                 boardCopy.splice(source.index, 1);
-                boardCopy.splice(destination.index, 0, draggableId);
+                boardCopy.splice(destination.index, 0, taskObj);
                 return {
                     ...oldTodosObj,
                     [source.droppableId]: boardCopy
@@ -48,8 +50,10 @@ const Trello = () => {
                 const sourceCopy = [...oldTodoObj[source.droppableId]];
                 const destinationCopy = [...oldTodoObj[destination.droppableId]];
 
+                const taskObj = sourceCopy[source.index];
+
                 sourceCopy.splice(source.index, 1);
-                destinationCopy.splice(destination.index, 0, draggableId);
+                destinationCopy.splice(destination.index, 0, taskObj);
 
                 return {
                     ...oldTodoObj,
