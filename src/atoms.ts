@@ -63,9 +63,5 @@ export interface ITrelloTodo {
 
 export const trelloTodoState = atom<IToDoState>({
     key: "toDo",
-    default: {
-        to_do: [],
-        doing: [],
-        done: []
-    }
+    default: JSON.parse(localStorage.getItem("todosObj") || '{}')
 })
